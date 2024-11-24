@@ -1,5 +1,6 @@
 package com.wp.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -11,6 +12,8 @@ import lombok.Data;
 @Data
 @TableName("no_sharding")
 public class NoSharding {
+    @TableId
     private int id;
     private String name;
+    private String addr;
 }

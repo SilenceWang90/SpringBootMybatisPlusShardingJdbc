@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author wangpeng
  * @description TestController
@@ -51,6 +53,16 @@ public class TestController {
     @GetMapping("selectNoSharding")
     public NoSharding selectNoSharding(@RequestParam("id") int id) {
         return NoShardingMapper.selectNoSharding(id);
+    }
+
+    /**
+     * 分表字段要写在where条件中才会生效，写在on中不生效
+     * @param id
+     * @return
+     */
+    @GetMapping("selectWithJoin")
+    public List<NoSharding> selectWithJoin(@RequestParam("id") int id){
+        return NoShardingMapper.selectWithJoin(id);
     }
 
 }
