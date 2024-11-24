@@ -1,0 +1,34 @@
+spring:
+  shardingsphere:
+    datasource:
+      names: ds1,ds2
+      ds1:
+        type: com.zaxxer.hikari.HikariDataSource # 必须指定数据源类型
+        jdbcUrl: jdbc:mysql://localhost:3306/sharding_db?useSSL=false&serverTimezone=UTC
+        username: root
+        password: Wangpeng@90
+        driver-class-name: com.mysql.cj.jdbc.Driver
+      ds2:
+        type: com.zaxxer.hikari.HikariDataSource # 必须指定数据源类型
+        jdbcUrl: jdbc:mysql://localhost:3307/normal_db?useSSL=false&serverTimezone=UTC
+        username: root
+        password: root
+        driver-class-name: com.mysql.cj.jdbc.Driver
+#    rules:
+    sharding:
+      default-data-source-name: ds1
+      tables:
+        test:
+          actual-data-nodes: ds1.test$->{0..1}
+          table-strategy:
+            inline:
+              sharding-column: id
+              algorithm-expression: test$->{id % 2}
+    props:
+      sql:
+        show: true
+logging:
+  level:
+    org.apache.shardingsphere: DEBUG
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
