@@ -1,7 +1,7 @@
 spring:
   shardingsphere:
     datasource:
-      names: ds1,ds2
+      names: ds1, ds2
       ds1:
         type: com.zaxxer.hikari.HikariDataSource # 必须指定数据源类型
         jdbcUrl: jdbc:mysql://localhost:3306/sharding_db?useSSL=false&serverTimezone=UTC
@@ -14,8 +14,9 @@ spring:
         username: root
         password: root
         driver-class-name: com.mysql.cj.jdbc.Driver
-#    rules:
     sharding:
+      # 对应没有配置分库策略的表，且是多数据源的情况下，必须指明默认数据源。这样查询这些表的时候才知道从哪个数据源查询数据，不然因为该表没有分表策略配置，shardingjdbc不知道该用哪个数据源进行查询，执行会报错
+      # 如果只有一个数据源可以不用该配置
       default-data-source-name: ds1
       tables:
         test:

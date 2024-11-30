@@ -46,7 +46,9 @@ public class TestController {
     }
 
     /**
-     * 不做分表的表查询。一定要配置默认的数据源！！！spring.shardingsphere.sharding.default-data-source-name=可以设置已经配置的ds1或者ds2
+     * 对不做分表的表进行查询，且如果shardingjdbc有多个数据源时，一定要配置默认的数据源。除非shardingjdbc的配置中只有一个数据源的时候不需要此配置！！！
+     * 因为不分表的表没有分表策略，shardingjdbc不知道多个数据源中用哪个数据源对该表进行查询。
+     * spring.shardingsphere.sharding.default-data-source-name=可以设置已经配置的ds1或者ds2
      * @param id
      * @return
      */
