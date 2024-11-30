@@ -1,0 +1,25 @@
+#schemaName: sharding_db 命名空间？？多shardingjdbc场景使用？？？
+dataSources:
+  ds1:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource # 必须指定数据源类型
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/sharding_db?useSSL=false&serverTimezone=UTC
+    username: root
+    password: Wangpeng@90
+#  default-data-source-name: ds1
+rules:
+  # !SHARDING是YAML中的一种标签（tag），用于标识这部分配置为Sharding规则。
+- !SHARDING
+  tables:
+    test:
+      actualDataNodes: ds1.test$->{0..1}
+      tableStrategy:
+        standard:
+          shardingColumn: id
+          shardingAlgorithmName: test_inline
+  shardingAlgorithms:
+    test_inline:
+      type: INLINE
+      props:
+        algorithm-expression: test$->{id % 2}
+        allow-range-query-with-inline-sharding: true
