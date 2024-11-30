@@ -20,11 +20,14 @@ spring:
       default-data-source-name: ds1
       tables:
         test:
+          # 配置test表的数据拆分在哪些分表上
           actual-data-nodes: ds1.test$->{0..1}
+          # 分表策略
           table-strategy:
             inline:
               sharding-column: id
               algorithm-expression: test$->{id % 2}
+    # 打印实际sql，否则只有逻辑sql。实际sql更方便的能看到实际查询的哪个分表
     props:
       sql:
         show: true
