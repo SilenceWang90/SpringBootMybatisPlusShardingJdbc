@@ -15,13 +15,19 @@ rules:
       actualDataNodes: ds1.test$->{0..1}
       tableStrategy:
         standard:
+          # 分片字段
           shardingColumn: id
+          # 分片规则，自定义一个分片规则，名称随意，此处是test_inline
           shardingAlgorithmName: test_inline
   shardingAlgorithms:
+    # 自定义的分片规则算法逻辑
     test_inline:
       type: INLINE
       props:
+        # $是占位符，{id % 2}是该占位符的实现
         algorithm-expression: test$->{id % 2}
+        # 允许支持范围查询，否则默认不支持
         allow-range-query-with-inline-sharding: true
+# 打印实际sql，否则只有逻辑sql。实际sql可以看出来具体查到了哪个分表上
 props:
   sql-show: true
