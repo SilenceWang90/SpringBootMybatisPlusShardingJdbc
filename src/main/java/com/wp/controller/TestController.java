@@ -56,7 +56,7 @@ public class TestController {
     }
 
     /**
-     * 分表字段在on中也生效
+     * 分表字段在on中也生效，即只要是分表的字段，本例子是test的id字段，无论在where还是join的on条件中，任意地方指明test.id=#{}都可以使得分表策略生效
      * @param id
      * @return
      */
