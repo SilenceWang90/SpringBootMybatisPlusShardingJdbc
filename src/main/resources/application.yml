@@ -27,6 +27,8 @@ spring:
             inline:
               sharding-column: id
               algorithm-expression: test$->{id % 2}
+              # 未验证！！！！！是否支持范围查询，默认该配置是false不支持！！！！！
+              allow-range-query-with-inline-sharding: true
     # 打印实际sql，否则只有逻辑sql。实际sql更方便的能看到实际查询的哪个分表
     props:
       sql:
