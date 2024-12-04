@@ -56,7 +56,7 @@ public class TestController {
     }
 
     /**
-     * 分表字段要写在where条件中才会生效，写在on中不生效
+     * 分表字段在on中也生效
      * @param id
      * @return
      */
