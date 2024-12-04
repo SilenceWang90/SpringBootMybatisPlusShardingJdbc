@@ -28,6 +28,9 @@ rules:
         algorithm-expression: test$->{id % 2}
         # 允许支持范围查询，否则默认不支持
         allow-range-query-with-inline-sharding: true
+- !SINGLE
+  tables:
+    - "*.*"
 # 打印实际sql，否则只有逻辑sql。实际sql可以看出来具体查到了哪个分表上
 props:
   sql-show: true
