@@ -82,4 +82,9 @@ public class TestController {
     public List<TestEntity> selectByDynamicDatasource(@RequestParam("id") int id){
         return testMapper.selectAnotherData();
     }
+
+    @GetMapping("/selectCommonBusiness")
+    public NoSharding selectCommonBusiness(){
+        return NoShardingMapper.selectCommonBusiness(4);
+    }
 }

@@ -17,4 +17,7 @@ public interface NoShardingMapper {
 
     @Select("select no_sharding.* from no_sharding left join test on test.id = no_sharding.id and test.id = #{id}")
     List<NoSharding> selectWithJoin(@Param("id") Integer id);
+
+    @Select("select * from common_business where id = #{id}")
+    NoSharding selectCommonBusiness(@Param("id") Integer id);
 }
