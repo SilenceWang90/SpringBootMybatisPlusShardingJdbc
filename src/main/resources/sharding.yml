@@ -5,11 +5,16 @@ dataSources:
     jdbcUrl: jdbc:mysql://localhost:3306/sharding_db?useSSL=false&serverTimezone=UTC
     username: root
     password: Wangpeng@90
+  ds2:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource # 必须指定数据源类型
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3307/normal_db?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
 rules:
   # !SHARDING是YAML中的一种标签（tag），用于标识这部分配置为Sharding规则。
   # 该配置不能省略，否则无法正确读取该配置文件。且下面还有!SINGLE配置是给所有表增加了默认的不分表的配置，如果表不再此处配置声明分表策略，将使用SINGLE的配置不分表查询
 - !SHARDING
-#  defaultDataSourceName: ds1
   tables:
     test:
       actualDataNodes: ds1.test$->{0..1}
@@ -28,11 +33,12 @@ rules:
         algorithm-expression: test$->{id % 2}
         # 允许支持范围查询，否则默认不支持
         allow-range-query-with-inline-sharding: true
-# 必须有该配置，否则没有配置分表策略的表在查询的时候会报错。其中第一个*代表所有数据库，第二个*代表所有表。如果不指定全部可以明确指明数据库名称(数据源)以及表名称
-# 该配置相当于给所有的表增加了一个默认配置。即如果没有指明- !SHARDING分表策略，那么这些表都是默认不分表；如果指明了- !SHARDING分表策略，那么就按照分表策略去查询
+# 该配置的作用是给没有指定分表策略的表的查询方式提供逻辑(相当于指明默认数据源)。必须有该配置，否则没有配置分表策略的表在查询的时候会报错。
+# 其中第一个*代表数据库(数据源)名称，第二个*代表数据库表名称。一般如果只配置了一个数据源(相当于只分表不分库)时，可以配置*.*。
+# 如果是有多个数据源，建议按照实际业务规则，指明不分表的表从哪个数据源查询。比如ds2.*，即意味着没有配置分表策略的表从ds2这个数据源查询
 - !SINGLE
   tables:
-    - "*.*"
+    - "ds2.*"
 # 打印实际sql，否则只有逻辑sql。实际sql可以看出来具体查到了哪个分表上
 props:
   sql-show: true
