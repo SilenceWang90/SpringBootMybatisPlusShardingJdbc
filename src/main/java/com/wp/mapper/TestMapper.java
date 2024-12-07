@@ -4,6 +4,8 @@ import com.wp.entity.TestEntity;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * @author wangpeng
  * @description TestMapper
@@ -15,4 +17,8 @@ public interface TestMapper {
 
     @Select("select * from test where name = #{name}")
     TestEntity selectByName(@Param("name") String name);
+
+    @Select("select * from test where id between 1 and 3")
+//    @Select("select * from test where id >= 1")
+    List<TestEntity> selectInRange();
 }

@@ -65,4 +65,14 @@ public class TestController {
         return NoShardingMapper.selectWithJoin(id);
     }
 
+    /**
+     * 范围查询，必须开启allow-range-query-with-inline-sharding: true，否则between > < >= <=等在执行时会报错。
+     * in严格意义不算范围查询，是有明确值的。shardingjdbc在处理范围查询的时候是通过union all将所有分表的数据集合起来，效率其实不高，所以尽量避免范围查询sql。
+     * @return
+     */
+    @GetMapping("selectInRange")
+    public List<TestEntity> selectInRange(){
+        return testMapper.selectInRange();
+    }
+
 }
