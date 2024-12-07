@@ -21,4 +21,7 @@ public interface TestMapper {
     @Select("select * from test where id between 1 and 3")
 //    @Select("select * from test where id >= 1")
     List<TestEntity> selectInRange();
+
+    @Select("select * from common_business")
+    List<TestEntity> selectAnotherData();
 }

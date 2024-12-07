@@ -1,5 +1,6 @@
 package com.wp.controller;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.wp.entity.NoSharding;
 import com.wp.entity.TestEntity;
 import com.wp.mapper.NoShardingMapper;
@@ -75,4 +76,10 @@ public class TestController {
         return testMapper.selectInRange();
     }
 
+
+    @DS("another-db")
+    @GetMapping("/selectByDynamicDatasource")
+    public List<TestEntity> selectByDynamicDatasource(@RequestParam("id") int id){
+        return testMapper.selectAnotherData();
+    }
 }

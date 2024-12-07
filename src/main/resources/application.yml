@@ -1,10 +1,18 @@
 spring:
   datasource:
     dynamic:
+      # 默认数据源。没有通过@DS指明就默认用这个数据源
       primary: sharding
       datasource:
+        # 分库分表的数据源
         sharding:
           driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
           # 配置不行的话文件名称就用"yaml"，别用yml。即sharding.yaml
           url: jdbc:shardingsphere:classpath:sharding.yml
-
+        # 没有分库分表的数据源
+        another-db:
+          url: jdbc:mysql://localhost:3308/another?useSSL=false&serverTimezone=UTC
+          username: root
+          password: root
+          driver-class-name: com.mysql.jdbc.Driver
+          type: com.zaxxer.hikari.HikariDataSource
